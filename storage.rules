@@ -1,0 +1,15 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // 目录前缀 manga/{uid}/ 锁定：只能往自己目录写；读也必须带登录态。
+    // 注意：一旦用 getDownloadURL 拿到公开链接，链接本身不再走规则校验，
+    // 所以 app.js 里每一页都是现取签名链接，不把 URL 存进 Firestore。
+    match /manga/{uid}/{allPaths...} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /{allPaths...} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #14161a; color: #e8e8e8; font: 15px/1.5 system-ui, "PingFang SC", "Microsoft YaHei", sans-serif; }
+button { background: #2b6cb0; color: #fff; border: 0; border-radius: 6px; padding: 9px 14px; cursor: pointer; }
+button.ghost { background: #2a2e35; }
+button.danger { background: #8b2252; }
+button.small { padding: 6px 10px; }
+input { background: #1f232a; color: #e8e8e8; border: 1px solid #333842; border-radius: 6px; padding: 9px 11px; width: 100%; }
+.card { background: #1a1d22; border: 1px solid #2a2e35; border-radius: 10px; padding: 16px; margin: 14px; display: flex; flex-direction: column; gap: 10px; max-width: 520px; }
+.row { display: flex; gap: 10px; }
+.grow { flex: 1; }
+.dim { color: #8a919e; font-size: 13px; }
+.err { color: #ff7b7b; min-height: 18px; margin: 0; }
+.bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #1a1d22; border-bottom: 1px solid #2a2e35; position: sticky; top: 0; z-index: 5; }
+.hidden { display: none !important; }
+#view-auth .card { margin: 12vh auto; }
+
+/* 只允许一个 view 显示 */
+.view { display: none; }
+.view.on { display: block; }
+
+/* 书架 */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; padding: 0 14px 20px; }
+.grid figure { margin: 0; background: #1a1d22; border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #2a2e35; }
+.grid img { width: 100%; height: 190px; object-fit: cover; display: block; }
+.grid figcaption { padding: 8px; font-size: 14px; }
+
+/* 阅读区 */
+.stage { position: relative; background: #000; min-height: 60vh; display: flex; justify-content: center; overflow: hidden; }
+.stage img { max-width: 100%; display: block; user-select: none; -webkit-user-drag: none; }
+
+/* 水印层：铺满全屏，pointer-events 关闭，截图时会被一起截进去 */
+.mark { position: absolute; inset: 0; pointer-events: none; z-index: 3; opacity: .16; }
+
+/* 弹幕层 */
+.dm-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 4; }
+.dm { position: absolute; white-space: nowrap; font-size: 20px; text-shadow: 0 1px 3px #000; animation: fly linear 8s forwards; }
+@keyframes fly { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+
+/* 干扰：失去焦点 / 按 PrintScreen / 切后台 时遮住画面 */
+body.blacked .stage, body.blacked .grid { visibility: hidden; }
+body.blacked::after { content: ""; position: fixed; inset: 0; background: #000; z-index: 99; }
+
+/* 全站禁止选中和右键菜单能拿到的东西 */
+body { user-select: none; -webkit-touch-callout: none; }
+input { user-select: text; }
+
+/* 打印直接空白 */
+@media print { body > * { display: none !important; } }

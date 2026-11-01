@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>漫画站</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 登录 -->
+<section id="view-auth" class="view">
+  <div class="card">
+    <h1>漫画站</h1>
+    <input id="email" type="email" placeholder="邮箱" autocomplete="username">
+    <input id="pass" type="password" placeholder="密码" autocomplete="current-password">
+    <div class="row">
+      <button id="btn-login">登录</button>
+      <button id="btn-reg" class="ghost">注册</button>
+    </div>
+    <p id="auth-err" class="err"></p>
+  </div>
+</section>
+
+<!-- 书架 -->
+<section id="view-list" class="view">
+  <header class="bar">
+    <b>我的书架</b>
+    <span id="whoami" class="dim"></span>
+    <span class="grow"></span>
+    <button id="btn-logout" class="ghost small">退出</button>
+  </header>
+  <div class="card">
+    <input id="new-title" placeholder="漫画标题">
+    <input id="new-files" type="file" accept="image/*" multiple>
+    <button id="btn-upload">上传</button>
+    <p id="up-msg" class="dim"></p>
+  </div>
+  <div id="grid" class="grid"></div>
+</section>
+
+<!-- 阅读 -->
+<section id="view-read" class="view">
+  <header class="bar">
+    <button id="btn-back" class="ghost small">← 返回</button>
+    <b id="read-title"></b>
+    <span id="page-no" class="dim"></span>
+    <span class="grow"></span>
+    <button id="btn-edit" class="ghost small">编辑</button>
+  </header>
+
+  <div id="stage" class="stage">
+    <img id="page-img" alt="" draggable="false">
+    <!-- 水印层：截图后能溯源到具体账号 -->
+    <div id="mark" class="mark"></div>
+    <!-- 弹幕层 -->
+    <div id="dm-layer" class="dm-layer"></div>
+  </div>
+
+  <div class="bar">
+    <button id="btn-prev" class="small">←</button>
+    <button id="btn-next" class="small">→</button>
+    <input id="dm-input" placeholder="发一条弹幕，回车发送">
+    <button id="btn-send" class="small">发送</button>
+  </div>
+
+  <!-- 仅作者可见 -->
+  <div id="editor" class="card hidden">
+    <h3>编辑本页 / 本部</h3>
+    <input id="edit-title" placeholder="改标题">
+    <button id="btn-save-title" class="small">保存标题</button>
+    <hr>
+    <input id="add-files" type="file" accept="image/*" multiple>
+    <button id="btn-add-pages" class="small">追加新页</button>
+    <hr>
+    <button id="btn-del-page" class="ghost small">删除当前页</button>
+    <button id="btn-del-manga" class="ghost small danger">删除整部漫画</button>
+  </div>
+</section>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

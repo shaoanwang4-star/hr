@@ -1,0 +1,24 @@
+rulesVersion = "2";
+
+match /databases/{database}/documents {
+
+  // 漫画元数据：登录才能看（不登录连图都取不到），只有作者能改能删
+  match /manga/{id} {
+    allow read:  if request.auth != null;
+    allow create: if request.auth != null
+                  && request.resource.data.uid == request.auth.uid;
+    allow update, delete: if request.auth != null
+                          && resource.data.uid == request.auth.uid;
+
+    // 弹幕：人人可发（署名锁定自己的 uid），只能删自己的
+    match /dm/{cid} {
+      allow read:  if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.text.size() <= 60;
+      allow delete: if request.auth != null
+                    && resource.data.uid == request.auth.uid;
+      allow update: if false;
+    }
+  }
+}
